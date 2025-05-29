@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PackageSummary } from "../../types";
+import type { PackageSummary } from "../../types";
 
 interface SearchResponse {
   objects: {

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { PackageSummary } from "../../types";
+// import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PackageSummary } from "../../types";
 
 export interface SearchState {
   packages: PackageSummary[];
