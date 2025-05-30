@@ -2,13 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, IconButton, Box } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
+import { useAppDispatch } from "../store/hooks";
+import { getPackages } from "../store/thunks/getPackages";
 
 export const SearchInput = () => {
   const [term, setTerm] = useState("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch(getPackages(term));
     navigate(`/search?term=${term}`);
   };
 

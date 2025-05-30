@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import type { PackageSummary } from "../../types";
 
 export interface SearchState {
   packages: PackageSummary[];
   isLoading: boolean;
-  error: unknown;
+  error: string | null;
 }
 
 const initialState: SearchState = {
@@ -18,19 +18,30 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
+    setLoading: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    resetState: (state) => {
+      state.packages = [];
+      state.isLoading = false;
+      state.error = null;
+    },
+    setPackages: (state, action: PayloadAction<PackageSummary[]>) => {
+      console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.error = null;
+      state.packages = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = searchSlice.actions;
+export const { setLoading, setError, resetState, setPackages } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;
