@@ -47,7 +47,6 @@ export const searchSlice = createSlice({
       state.error = null;
     },
     setPackage: (state, action: PayloadAction<PackageDetails>) => {
-      console.log("setPackage", action.payload);
       state.package = action.payload;
       state.isLoading = false;
       state.error = null;
