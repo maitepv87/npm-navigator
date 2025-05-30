@@ -2,10 +2,8 @@ import { Typography, Box } from "@mui/material";
 import { PackageListItem } from "../components";
 import { useAppSelector } from "../store/hooks";
 
-export const SearchPage = () => {
-  const { packages } = useAppSelector((state) => {
-    return state.search;
-  });
+export const PackageSearchPage = () => {
+  const packages = useAppSelector((state) => state.search.packages);
 
   return (
     <Box sx={{ padding: 3 }}>

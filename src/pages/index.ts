@@ -1,4 +1,4 @@
-export * from "./DetailsPage";
 export * from "./HomePage";
+export * from "./PackageDetailsPage";
+export * from "./PackageSearchPage";
 export * from "./Root";
-export * from "./SearchPage";
