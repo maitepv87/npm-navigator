@@ -1,9 +1,11 @@
 import { Typography, Box } from "@mui/material";
-import { PackageListItem } from "../components";
+import { CardListSkeleton, PackageListItem } from "../components";
 import { useAppSelector } from "../store/hooks";
 
 export const PackageSearchPage = () => {
-  const packages = useAppSelector((state) => state.search.packages);
+  const { packages, isLoading } = useAppSelector((state) => state.search);
+
+  if (isLoading) return <CardListSkeleton />;
 
   return (
     <Box sx={{ padding: 3 }}>

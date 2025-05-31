@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getPackage } from "../store/thunks/getPackage";
 import {
   Container,
   Card,
@@ -11,17 +9,24 @@ import {
   Box,
   Divider,
 } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { getPackage } from "../store/thunks/getPackage";
+import { FormSkeleton } from "../components";
 
 export const PackageDetailsPage = () => {
   const { name } = useParams();
   const dispatch = useAppDispatch();
-  const packageData = useAppSelector((state) => state.search.package);
+  const { package: packageData, isLoading } = useAppSelector(
+    (state) => state.search
+  );
 
   useEffect(() => {
     if (name) {
       dispatch(getPackage(name));
     }
   }, [name]);
+
+  if (isLoading) return <FormSkeleton />;
 
   return (
     <Container sx={{ maxWidth: "md", mt: 5 }}>
