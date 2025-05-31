@@ -18,13 +18,14 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
     <Card
       sx={{
         display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
         justifyContent: "space-between",
         alignItems: "center",
         padding: 1,
         mb: 1,
       }}
     >
-      <CardContent sx={{ flex: 1 }}>
+      <CardContent sx={{ flex: 1, minWidth: 0 }}>
         <Typography
           variant="h6"
           component={Link}
@@ -36,18 +37,23 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
         <Typography variant="body2" color="text.secondary">
           {pack.description}
         </Typography>
-        <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 1 }}>
           {(pack.keywords || []).map((keyword, index) => (
             <Chip key={`${keyword}-${index}`} label={keyword} size="small" />
           ))}
         </Box>
       </CardContent>
+
       <Button
         variant="contained"
         color="primary"
         component={Link}
         to={`/packages/${pack.name}`}
-        sx={{ mr: 2 }}
+        sx={{
+          mr: { sm: 2 },
+          width: { xs: "100%", sm: "auto" }, // ✅ El botón se expande en móviles
+          mt: { xs: 1, sm: 0 },
+        }}
       >
         View
       </Button>

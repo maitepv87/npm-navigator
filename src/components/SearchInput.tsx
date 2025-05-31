@@ -25,6 +25,8 @@ export const SearchInput = () => {
           borderRadius: 1,
           overflow: "hidden",
           backgroundColor: "#fff",
+          width: { xs: "100%", sm: "auto" },
+          mt: { xs: 2, sm: 0 },
         }}
       >
         <TextField
