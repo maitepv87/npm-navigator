@@ -51,7 +51,7 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
         to={`/packages/${pack.name}`}
         sx={{
           mr: { sm: 2 },
-          width: { xs: "100%", sm: "auto" }, // ✅ El botón se expande en móviles
+          width: { xs: "100%", sm: "auto" },
           mt: { xs: 1, sm: 0 },
         }}
       >

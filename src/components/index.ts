@@ -1,5 +1,6 @@
 export * from "./ErrorHandler";
 export * from "./Header";
+export * from "./PackageCard";
 export * from "./PackageListItem";
 export * from "./SearchInput";
 export * from "./skeletons/CardListSkeleton";
