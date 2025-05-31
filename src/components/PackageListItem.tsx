@@ -1,13 +1,7 @@
 import type { PackageSummary } from "../types";
 import { Link } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  Button,
-  Box,
-} from "@mui/material";
+import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
+import { ActionButton } from "./";
 
 interface PackageListItemProps {
   pack: PackageSummary;
@@ -44,19 +38,9 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
         </Box>
       </CardContent>
 
-      <Button
-        variant="contained"
-        color="primary"
-        component={Link}
-        to={`/packages/${pack.name}`}
-        sx={{
-          mr: { sm: 2 },
-          width: { xs: "100%", sm: "auto" },
-          mt: { xs: 1, sm: 0 },
-        }}
-      >
+      <ActionButton to={`/packages/${pack.name}`} color="primary">
         View
-      </Button>
+      </ActionButton>
     </Card>
   );
 };

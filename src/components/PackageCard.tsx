@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
+import { ActionButton } from "./";
 
 interface PackageCardProps {
   name: string;
@@ -44,15 +45,9 @@ export const PackageCard = ({
         </Typography>
       </CardContent>
 
-      <Button
-        variant="contained"
-        color="primary"
-        component={Link}
-        to={`/packages/${name}`}
-        sx={{ mt: 2 }}
-      >
+      <ActionButton to={`/packages/${name}`} color="primary">
         View
-      </Button>
+      </ActionButton>
     </Card>
   );
 };
