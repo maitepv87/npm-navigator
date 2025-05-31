@@ -13,29 +13,9 @@ export const getPackage = (
     try {
       const response = await axios.get(`https://registry.npmjs.org/${name}`);
 
-      const {
-        name: packageName,
-        description,
-        readme,
-        license,
-        maintainers,
-        author,
-      } = response.data;
+      const data: PackageDetails = response.data;
 
-      const formattedData: PackageDetails = {
-        name: packageName,
-        description,
-        readme,
-        license,
-        maintainers,
-        author:
-          author ??
-          (maintainers.length > 0
-            ? maintainers[0]
-            : { name: "Unknown", email: "N/A" }),
-      };
-
-      dispatch(setPackage(formattedData));
+      dispatch(setPackage(data));
     } catch (error) {
       let errorMessage = "Unexpected error occurred";
       if (error instanceof AxiosError) {

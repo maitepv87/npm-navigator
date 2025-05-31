@@ -37,8 +37,8 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
           {pack.description}
         </Typography>
         <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-          {(pack.keywords || []).map((keyword) => (
-            <Chip key={keyword} label={keyword} size="small" />
+          {(pack.keywords || []).map((keyword, index) => (
+            <Chip key={`${keyword}-${index}`} label={keyword} size="small" />
           ))}
         </Box>
       </CardContent>
