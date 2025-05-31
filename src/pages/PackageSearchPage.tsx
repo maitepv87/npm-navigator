@@ -1,5 +1,10 @@
 import { Typography, Box } from "@mui/material";
-import { CardListSkeleton, ErrorHandler, PackageListItem } from "../components";
+import {
+  CardListSkeleton,
+  ErrorHandler,
+  PackageListItem,
+  PaginationRounded,
+} from "../components";
 import { useAppSelector } from "../store/hooks";
 
 export const PackageSearchPage = () => {
@@ -16,10 +21,15 @@ export const PackageSearchPage = () => {
       <Typography variant="h6" fontWeight="bold" gutterBottom>
         {packages.length} packages found
       </Typography>
+
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
         {packages.map((result) => (
           <PackageListItem key={result.name} pack={result} />
         ))}
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <PaginationRounded count={10} />
       </Box>
     </Box>
   );
