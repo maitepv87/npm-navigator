@@ -11,14 +11,16 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getPackage } from "../store/thunks/getPackage";
-import { FormSkeleton } from "../components";
+import { FormSkeleton, ErrorHandler } from "../components";
 
 export const PackageDetailsPage = () => {
   const { name } = useParams();
   const dispatch = useAppDispatch();
-  const { package: packageData, isLoading } = useAppSelector(
-    (state) => state.search
-  );
+  const {
+    package: packageData,
+    isLoading,
+    error,
+  } = useAppSelector((state) => state.search);
 
   useEffect(() => {
     if (name) {
@@ -30,6 +32,8 @@ export const PackageDetailsPage = () => {
 
   return (
     <Container sx={{ maxWidth: "md", mt: 5 }}>
+      <ErrorHandler error={error} />
+
       <Card elevation={3}>
         <CardContent>
           <Typography variant="h4" fontWeight="bold">

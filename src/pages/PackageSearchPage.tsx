@@ -1,14 +1,18 @@
 import { Typography, Box } from "@mui/material";
-import { CardListSkeleton, PackageListItem } from "../components";
+import { CardListSkeleton, ErrorHandler, PackageListItem } from "../components";
 import { useAppSelector } from "../store/hooks";
 
 export const PackageSearchPage = () => {
-  const { packages, isLoading } = useAppSelector((state) => state.search);
+  const { packages, isLoading, error } = useAppSelector(
+    (state) => state.search
+  );
 
   if (isLoading) return <CardListSkeleton />;
 
   return (
     <Box sx={{ padding: 3 }}>
+      <ErrorHandler error={error} />
+
       <Typography variant="h6" fontWeight="bold" gutterBottom>
         {packages.length} packages found
       </Typography>
