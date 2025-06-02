@@ -1,54 +1,39 @@
-# React + TypeScript + Vite
+# NPM Navigator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+NPM Navigator is a React-based application designed to provide a seamless experience for **exploring and retrieving package details** from the NPM Registry.  
+Built with **React, TypeScript, Redux Toolkit, and Axios**, it offers structured state management and efficient API integration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project allows for:
 
-## Expanding the ESLint configuration
+- **Searching NPM packages** and accessing key information.
+- **Viewing metadata** such as description, maintainers count, and licensing details.
+- **Optimized state management** using Redux Toolkit.
+- **Handling asynchronous API requests** with Axios.
+- **Improved UI responsiveness** with Material UI.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+It serves as a well-organized platform for **understanding how modern frontend technologies** streamline data management and package discovery.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Technologies Used
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React** – Component-based UI development.
+- **Vite** – Fast build tool and development environment.
+- **Redux Toolkit** – Efficient global state management.
+- **React Redux** – Official React bindings for Redux.
+- **Axios** – Promise-based HTTP client for API requests.
+- **Material UI** – Modern styling framework.
+- **TypeScript** – Strongly typed code for reliability and scalability.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Getting Started
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Installation & Setup
+
+To run the project locally, follow these steps:
+
+#### Clone the repository
+```bash
+git clone https://github.com/maitepv87/npm-navigator.git
+cd npm-navigator
+npm install
+npm run dev
