@@ -14,7 +14,7 @@ export const HomePage = () => {
   useEffect(() => {
     dispatch(resetSearchState());
     dispatch(getFeaturePackages());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) return <HomeSkeleton />;
 
