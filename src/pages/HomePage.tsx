@@ -1,41 +1,27 @@
 import { useEffect } from "react";
 import { Container, Typography, Grid } from "@mui/material";
-import { PackageCard } from "../components";
-import { useAppDispatch } from "../store/hooks";
-import { resetState } from "../store/slices/searchSlice";
+import { PackageCard, ErrorHandler, HomeSkeleton } from "../components";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { resetSearchState } from "../store/slices/searchSlice";
+import { getFeaturePackages } from "../store/thunks/getFeaturedPackages";
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
+  const { featurePackages, isLoading, error } = useAppSelector(
+    (state) => state.search
+  );
 
   useEffect(() => {
-    dispatch(resetState());
+    dispatch(resetSearchState());
+    dispatch(getFeaturePackages());
   }, []);
 
-  const featuredPackages = [
-    {
-      name: "react",
-      description: "A JavaScript library for building user interfaces",
-      maintainers: [{ name: "Meta", email: "support@meta.com" }],
-    },
-    {
-      name: "axios",
-      description: "Promise-based HTTP client for the browser and Node.js",
-      maintainers: [{ name: "Team Axios", email: "axios@team.com" }],
-    },
-    {
-      name: "redux-toolkit",
-      description: "Official, opinionated Redux toolset",
-      maintainers: [{ name: "Redux Team", email: "redux@team.com" }],
-    },
-    {
-      name: "typescript-toolkit",
-      description: "Official, opinionated typescript",
-      maintainers: [{ name: "Redux Team", email: "redux@team.com" }],
-    },
-  ];
+  if (isLoading) return <HomeSkeleton />;
 
   return (
     <Container sx={{ py: 8 }}>
+      <ErrorHandler error={error} />
+
       <Typography variant="h2" fontWeight="bold" align="center">
         The NPM Registry
       </Typography>
@@ -47,16 +33,24 @@ export const HomePage = () => {
       >
         The package manager for JavaScript. Search and view packages.
       </Typography>
-
-      <Grid container spacing={4} sx={{ justifyContent: "center" }}>
-        {featuredPackages.map(({ name, description, maintainers }) => (
-          <Grid key={name} sx={{ flex: "1 1 auto", minWidth: 280 }}>
-            <PackageCard
-              name={name}
-              description={description}
-              maintainers={maintainers}
-            />
-          </Grid>
+      
+      <Grid
+        container
+        spacing={4}
+        sx={{
+          justifyContent: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: 3,
+        }}
+      >
+        {featurePackages.map(({ name, description, maintainersCount }) => (
+          <PackageCard
+            key={name}
+            name={name}
+            description={description}
+            maintainersCount={maintainersCount}
+          />
         ))}
       </Grid>
     </Container>

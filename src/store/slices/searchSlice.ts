@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { PackageSummary, PackageDetails } from "../../types";
+import type { PackageSummary, PackageDetails, FeaturePackage } from "../../types";
 
 export interface SearchState {
   packages: PackageSummary[];
   package: PackageDetails;
+  featurePackages: FeaturePackage[];
   total: number;
   searchTerm: string;
   isLoading: boolean;
@@ -21,6 +22,7 @@ const initialState: SearchState = {
     maintainers: [],
     license: "",
   },
+  featurePackages: [],
   total: 0,
   searchTerm: "",
   isLoading: false,
@@ -44,11 +46,15 @@ export const searchSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    resetState: (state) => {
-      Object.assign(state, initialState);
+    resetSearchState: (state) => {
+      state.packages = [];
+      state.package = initialState.package;
+      state.total = 0;
+      state.searchTerm = "";
+      state.isLoading = false;
+      state.error = null;
     },
     setPackages: (state, action: PayloadAction<PackagesPayload>) => {
-      console.log("setPackages", action.payload);
       state.packages = action.payload.packages;
       state.total = action.payload.total;
       state.isLoading = false;
@@ -62,6 +68,11 @@ export const searchSlice = createSlice({
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
     },
+    setFeaturePackages: (state, action: PayloadAction<FeaturePackage[]>) => {
+      state.featurePackages = action.payload;
+      state.isLoading = false;
+      state.error = null;
+    },
   },
 });
 
@@ -69,10 +80,11 @@ export const searchSlice = createSlice({
 export const {
   setLoading,
   setError,
-  resetState,
+  resetSearchState,
   setPackages,
   setPackage,
   setSearchTerm,
+  setFeaturePackages,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

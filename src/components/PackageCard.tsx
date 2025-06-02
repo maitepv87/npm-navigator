@@ -5,43 +5,61 @@ import { ActionButton } from "./";
 interface PackageCardProps {
   name: string;
   description: string;
-  maintainers: {
-    email: string;
-    name: string;
-  }[];
+  maintainersCount: number;
 }
 
 export const PackageCard = ({
   name,
   description,
-  maintainers,
+  maintainersCount,
 }: PackageCardProps) => {
   return (
     <Card
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
         textAlign: "center",
-        padding: 2,
-        mb: 2,
+        padding: 3,
+        mb: 3,
+        boxShadow: 3,
+        borderRadius: 2,
+        minHeight: 200,
       }}
     >
-      <CardContent sx={{ flex: 1 }}>
+      <CardContent sx={{ flex: 1, paddingBottom: 3 }}>
         <Typography
-          variant="h6"
+          variant="h5"
           component={Link}
           to={`/packages/${name}`}
-          sx={{ textDecoration: "none", fontWeight: "bold", color: "inherit" }}
+          sx={{
+            textDecoration: "none",
+            fontWeight: "bold",
+            color: "primary.main",
+          }}
         >
           {name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
           {description}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {maintainers.length} Maintainers
+
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: "bold", color: "text.primary", letterSpacing: 0.5 }}
+        >
+          {maintainersCount} Maintainers
         </Typography>
       </CardContent>
 

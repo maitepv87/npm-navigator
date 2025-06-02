@@ -6,4 +6,5 @@ export * from "./PackageListItem";
 export * from "./PaginationRounded";
 export * from "./SearchInput";
 export * from "./skeletons/CardListSkeleton";
+export * from "./skeletons/HomeSkeleton";
 export * from "./skeletons/FormSkeleton";
