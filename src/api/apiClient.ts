@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "https://registry.npmjs.org",
+  baseURL: import.meta.env.VITE_API_URL,
 });
