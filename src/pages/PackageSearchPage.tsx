@@ -7,7 +7,7 @@ import {
   PaginationRounded,
 } from "../components";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { getPackages } from "../store/thunks/getPackages";
+import { getPackages } from "../store/thunks";
 import { PAGE_SIZE } from "../config";
 
 export const PackageSearchPage = () => {

@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import { apiClient } from "../../api/apiClient";
 import { ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import {
@@ -8,7 +9,14 @@ import {
 } from "../slices/searchSlice";
 import type { FeaturePackage } from "../../types";
 
-const FEATURES_PACKAGES = ["react", "typescript", "vite", "redux-toolkit", "axios", "esbuild"];
+const FEATURES_PACKAGES = [
+  "react",
+  "typescript",
+  "vite",
+  "redux-toolkit",
+  "axios",
+  "esbuild",
+];
 
 export const getFeaturePackages = (): ThunkAction<
   void,
@@ -21,7 +29,7 @@ export const getFeaturePackages = (): ThunkAction<
 
     try {
       const requests = FEATURES_PACKAGES.map((name) =>
-        axios.get(`https://registry.npmjs.org/${name}`)
+        apiClient.get(`/${name}`)
       );
 
       const responses = await Promise.all(requests);
@@ -31,7 +39,7 @@ export const getFeaturePackages = (): ThunkAction<
         description: res.data.description,
         maintainersCount: res.data.maintainers.length,
       }));
-   
+
       dispatch(setFeaturePackages(packages));
     } catch (error) {
       let errorMessage = "Unexpected error occurred";

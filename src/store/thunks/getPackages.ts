@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import { apiClient } from "../../api/apiClient";
 import { ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { setLoading, setError, setPackages } from "../slices/searchSlice";
@@ -24,10 +25,8 @@ export const getPackages = (
     dispatch(setLoading());
 
     try {
-      const response = await axios.get(
-        `https://registry.npmjs.org/-/v1/search?text=${term}&size=${pageSize}&from=${
-          page * pageSize
-        }`
+      const response = await apiClient.get(
+        `/-/v1/search?text=${term}&size=${pageSize}&from=${page * pageSize}`
       );
 
       const data: SearchResponse = response.data;

@@ -3,7 +3,7 @@ import { TextField, IconButton, Box } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
 import { INITIAL_PAGE, PAGE_SIZE } from "../config";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getPackages } from "../store/thunks/getPackages";
+import { getPackages } from "../store/thunks";
 import { setSearchTerm } from "../store/slices/searchSlice";
 
 export const SearchInput = () => {

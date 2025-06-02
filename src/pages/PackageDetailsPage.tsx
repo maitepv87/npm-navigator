@@ -10,7 +10,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getPackage } from "../store/thunks/getPackage";
+import { getPackage } from "../store/thunks";
 import { FormSkeleton, ErrorHandler } from "../components";
 
 export const PackageDetailsPage = () => {

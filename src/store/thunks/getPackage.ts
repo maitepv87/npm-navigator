@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import { apiClient } from "../../api/apiClient";
 import { ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { setLoading, setError, setPackage } from "../slices/searchSlice";
@@ -11,7 +12,7 @@ export const getPackage = (
     dispatch(setLoading());
 
     try {
-      const response = await axios.get(`https://registry.npmjs.org/${name}`);
+      const response = await apiClient.get(`/${name}`);
 
       const data: PackageDetails = response.data;
 

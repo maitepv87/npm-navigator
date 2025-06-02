@@ -3,7 +3,7 @@ import { Container, Typography, Grid } from "@mui/material";
 import { PackageCard, ErrorHandler, HomeSkeleton } from "../components";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { resetSearchState } from "../store/slices/searchSlice";
-import { getFeaturePackages } from "../store/thunks/getFeaturedPackages";
+import { getFeaturePackages } from "../store/thunks";
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ export const HomePage = () => {
       >
         The package manager for JavaScript. Search and view packages.
       </Typography>
-      
+
       <Grid
         container
         spacing={4}
