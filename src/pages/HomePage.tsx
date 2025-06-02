@@ -1,7 +1,16 @@
+import { useEffect } from "react";
 import { Container, Typography, Grid } from "@mui/material";
 import { PackageCard } from "../components";
+import { useAppDispatch } from "../store/hooks";
+import { resetState } from "../store/slices/searchSlice";
 
 export const HomePage = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetState());
+  }, []);
+
   const featuredPackages = [
     {
       name: "react",
