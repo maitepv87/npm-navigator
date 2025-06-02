@@ -5,6 +5,8 @@ import type { PackageSummary, PackageDetails } from "../../types";
 export interface SearchState {
   packages: PackageSummary[];
   package: PackageDetails;
+  total: number;
+  searchTerm: string;
   isLoading: boolean;
   error: string | null;
 }
@@ -19,9 +21,16 @@ const initialState: SearchState = {
     maintainers: [],
     license: "",
   },
+  total: 0,
+  searchTerm: "",
   isLoading: false,
   error: null,
 };
+
+interface PackagesPayload {
+  packages: PackageSummary[];
+  total: number;
+}
 
 export const searchSlice = createSlice({
   name: "search",
@@ -40,9 +49,10 @@ export const searchSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-    setPackages: (state, action: PayloadAction<PackageSummary[]>) => {
+    setPackages: (state, action: PayloadAction<PackagesPayload>) => {
       console.log("setPackages", action.payload);
-      state.packages = action.payload;
+      state.packages = action.payload.packages;
+      state.total = action.payload.total;
       state.isLoading = false;
       state.error = null;
     },
@@ -51,11 +61,20 @@ export const searchSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading, setError, resetState, setPackages, setPackage } =
-  searchSlice.actions;
+export const {
+  setLoading,
+  setError,
+  resetState,
+  setPackages,
+  setPackage,
+  setSearchTerm,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

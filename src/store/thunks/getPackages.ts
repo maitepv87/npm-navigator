@@ -4,6 +4,7 @@ import type { RootState } from "../store";
 import { setLoading, setError, setPackages } from "../slices/searchSlice";
 
 interface SearchResponse {
+  total: number;
   objects: {
     package: {
       name: string;
@@ -15,14 +16,18 @@ interface SearchResponse {
 }
 
 export const getPackages = (
-  term: string
+  term: string,
+  page: number,
+  pageSize: number
 ): ThunkAction<void, RootState, unknown, any> => {
   return async (dispatch) => {
     dispatch(setLoading());
 
     try {
       const response = await axios.get(
-        `https://registry.npmjs.org/-/v1/search?text=${term}`
+        `https://registry.npmjs.org/-/v1/search?text=${term}&size=${pageSize}&from=${
+          page * pageSize
+        }`
       );
 
       const data: SearchResponse = response.data;
@@ -36,7 +41,7 @@ export const getPackages = (
         };
       });
 
-      dispatch(setPackages(packages));
+      dispatch(setPackages({ packages, total: data.total }));
     } catch (error) {
       let errorMessage = "Unexpected error occurred";
       if (error instanceof AxiosError) {
