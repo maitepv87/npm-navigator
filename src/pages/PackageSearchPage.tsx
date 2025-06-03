@@ -18,6 +18,8 @@ export const PackageSearchPage = () => {
   );
 
   const handlePageChange = (newPage: number) => {
+    if (!searchTerm) return;
+
     setPage(newPage - 1);
     dispatch(getPackages(searchTerm, newPage - 1, PAGE_SIZE));
   };
@@ -43,11 +45,19 @@ export const PackageSearchPage = () => {
       </Typography>
       <Divider sx={{ my: 2 }} />
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {packages.map((result) => (
-          <PackageListItem key={result.name} pack={result} />
-        ))}
-      </Box>
+      {total === 0 && !isLoading && !error && (
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          No packages found for "<strong>{searchTerm}</strong>"
+        </Typography>
+      )}
+
+      {packages.length > 0 && (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {packages.map((result) => (
+            <PackageListItem key={result.name} pack={result} />
+          ))}
+        </Box>
+      )}
 
       {totalPages > 1 && (
         <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
