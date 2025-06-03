@@ -15,7 +15,7 @@ export const HomePage = () => {
     dispatch(resetSearchState());
     dispatch(getFeaturePackages());
 
-    console.log("Testing deploy flow");
+    
   }, [dispatch]);
 
   if (isLoading) return <HomeSkeleton />;
