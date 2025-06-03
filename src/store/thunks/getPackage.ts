@@ -14,9 +14,21 @@ export const getPackage = (
     try {
       const response = await apiClient.get(`/${name}`);
 
-      const data: PackageDetails = response.data;
+      const data = response.data;
 
-      dispatch(setPackage(data));
+      const filteredPackage: PackageDetails = {
+        name: data.name,
+        description: data.description,
+        readme: data.readme || "",
+        author: {
+          name: data.author?.name || "",
+          email: data.author?.email || "",
+        },
+        maintainers: data.maintainers || [],
+        license: data.license || "",
+      };
+
+      dispatch(setPackage(filteredPackage));
     } catch (error) {
       let errorMessage = "Unexpected error occurred";
       if (error instanceof AxiosError) {

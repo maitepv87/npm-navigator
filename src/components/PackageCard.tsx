@@ -19,16 +19,20 @@ export const PackageCard = ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        alignItems: "center",
         textAlign: "center",
-        padding: 3,
-        mb: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        minHeight: 200,
+        p: 3,
+        borderRadius: 3,
+        boxShadow: 4,
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-4px)",
+          boxShadow: 6,
+        },
+        minHeight: 240,
+        backgroundColor: "background.paper",
       }}
     >
-      <CardContent sx={{ flex: 1, paddingBottom: 3 }}>
+      <CardContent sx={{ flex: 1, pb: 3 }}>
         <Typography
           variant="h5"
           component={Link}
@@ -37,6 +41,7 @@ export const PackageCard = ({
             textDecoration: "none",
             fontWeight: "bold",
             color: "primary.main",
+            "&:hover": { textDecoration: "underline" },
           }}
         >
           {name}
@@ -46,6 +51,7 @@ export const PackageCard = ({
           variant="body2"
           color="text.secondary"
           sx={{
+            mt: 1,
             display: "-webkit-box",
             WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical",
@@ -57,7 +63,12 @@ export const PackageCard = ({
 
         <Typography
           variant="body2"
-          sx={{ fontWeight: "bold", color: "text.primary", letterSpacing: 0.5 }}
+          sx={{
+            mt: 1,
+            fontWeight: 500,
+            color: "text.primary",
+            fontSize: "0.875rem",
+          }}
         >
           {maintainersCount} Maintainers
         </Typography>

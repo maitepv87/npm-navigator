@@ -5,17 +5,20 @@ interface ActionButtonProps {
   to: string;
   children: React.ReactNode;
   color?: "primary" | "secondary" | "success" | "error";
+  type?: "button" | "submit" | "reset";
 }
 
 export const ActionButton = ({
   to,
   children,
   color = "primary",
+  type = "button",
 }: ActionButtonProps) => {
   return (
     <Button
       variant="contained"
       color={color}
+      type={type}
       component={Link}
       to={to}
       sx={{

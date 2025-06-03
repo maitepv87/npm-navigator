@@ -17,6 +17,7 @@ export const SearchInput = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!searchTerm.trim()) return;
     dispatch(getPackages(searchTerm, INITIAL_PAGE, PAGE_SIZE));
     navigate(`/search?term=${searchTerm}`);
   };
@@ -40,9 +41,17 @@ export const SearchInput = () => {
           placeholder="Search packages..."
           value={searchTerm}
           onChange={handleChange}
-          sx={{ borderRadius: 0 }}
+          sx={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
         />
-        <IconButton type="submit" sx={{ color: "#333", borderRadius: 0 }}>
+        <IconButton
+          type="submit"
+          sx={{
+            color: "#333",
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+          }}
+          aria-label="Search"
+        >
           <VscSearch />
         </IconButton>
       </Box>

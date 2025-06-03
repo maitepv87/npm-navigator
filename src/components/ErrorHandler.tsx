@@ -14,6 +14,8 @@ export const ErrorHandler = ({ error }: ErrorHandlerProps) => {
 
   const handleClose = () => setOpen(false);
 
+  if (!error) return null;
+
   return (
     <Snackbar
       open={open}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Paper, Divider } from "@mui/material";
 import {
   CardListSkeleton,
   ErrorHandler,
@@ -22,29 +22,42 @@ export const PackageSearchPage = () => {
     dispatch(getPackages(searchTerm, newPage - 1, PAGE_SIZE));
   };
 
-  if (isLoading) return <CardListSkeleton />;
-
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
+  if (isLoading) return <CardListSkeleton />;
+
   return (
-    <Box sx={{ padding: 3 }}>
+    <Paper
+      elevation={2}
+      sx={{
+        p: { xs: 2, sm: 4 },
+        mt: 4,
+        maxWidth: "xl",
+        mx: "auto",
+      }}
+    >
       <ErrorHandler error={error} />
 
-      <Typography variant="h6" fontWeight="bold" gutterBottom>
+      <Typography variant="h5" fontWeight="bold" gutterBottom>
         {total} packages found
       </Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
+      <Divider sx={{ my: 2 }} />
+
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {packages.map((result) => (
           <PackageListItem key={result.name} pack={result} />
         ))}
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <PaginationRounded
-          count={totalPages}
-          page={page + 1}
-          onChange={handlePageChange}
-        />
-      </Box>
-    </Box>
+
+      {totalPages > 1 && (
+        <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
+          <PaginationRounded
+            count={totalPages}
+            page={page + 1}
+            onChange={handlePageChange}
+          />
+        </Box>
+      )}
+    </Paper>
   );
 };

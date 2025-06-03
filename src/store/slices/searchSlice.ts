@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { PackageSummary, PackageDetails, FeaturePackage } from "../../types";
+import type {
+  PackageSummary,
+  PackageDetails,
+  FeaturePackage,
+} from "../../types";
+import { PAGE_SIZE } from "../../config";
 
 export interface SearchState {
   packages: PackageSummary[];
@@ -55,7 +60,7 @@ export const searchSlice = createSlice({
       state.error = null;
     },
     setPackages: (state, action: PayloadAction<PackagesPayload>) => {
-      state.packages = action.payload.packages;
+      state.packages = action.payload.packages.slice(0, PAGE_SIZE); // Limit the number of saved packages
       state.total = action.payload.total;
       state.isLoading = false;
       state.error = null;
