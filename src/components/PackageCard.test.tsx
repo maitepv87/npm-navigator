@@ -35,7 +35,7 @@ describe("PackageCard", () => {
   });
 
   it("renders the View button with correct link", () => {
-    const viewBtn = screen.getByRole("button", { name: /view/i });
+    const viewBtn = screen.getByRole("link", { name: /view/i });
     expect(viewBtn.closest("a")).toHaveAttribute("href", "/packages/react");
   });
 });

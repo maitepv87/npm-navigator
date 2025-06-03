@@ -13,10 +13,13 @@ describe("ActionButton", () => {
       </BrowserRouter>
     );
 
-    const button = screen.getByRole("button", { name: /click me/i });
+    // Buscar role "link" porque es un <a>
+    const button = screen.getByRole("link", { name: /click me/i });
     expect(button).toBeInTheDocument();
+
+    // Atributos
     expect(button).toHaveAttribute("type", "button");
-    expect(button.closest("a")).toHaveAttribute("href", "/test");
+    expect(button).toHaveAttribute("href", "/test");
   });
 
   it("navigates to dynamic route using 'to' prop", () => {
@@ -28,11 +31,8 @@ describe("ActionButton", () => {
       </BrowserRouter>
     );
 
-    const button = screen.getByRole("button", { name: /view/i });
+    const button = screen.getByRole("link", { name: /view/i });
     expect(button).toBeInTheDocument();
-    expect(button.closest("a")).toHaveAttribute(
-      "href",
-      "/packages/example-package"
-    );
+    expect(button).toHaveAttribute("href", "/packages/example-package");
   });
 });

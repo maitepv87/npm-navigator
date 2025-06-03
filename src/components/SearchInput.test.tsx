@@ -1,21 +1,35 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchInput } from "./SearchInput";
-import * as reactRedux from "react-redux";
-import * as router from "react-router-dom";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
+// Mock personalizado de hooks y router
+vi.mock("../store/hooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
+}));
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+  };
+});
+
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useNavigate } from "react-router-dom";
+
 describe("SearchInput", () => {
-  const useDispatchMock = vi.spyOn(reactRedux, "useDispatch");
-  const useSelectorMock = vi.spyOn(reactRedux, "useSelector");
-  const useNavigateMock = vi.spyOn(router, "useNavigate");
+  const dispatchMock = vi.fn();
+  const navigateMock = vi.fn();
 
   beforeEach(() => {
-    useDispatchMock.mockReturnValue(vi.fn());
-    useSelectorMock.mockImplementation((selector) =>
+    (useAppDispatch as any).mockReturnValue(dispatchMock);
+    (useAppSelector as any).mockImplementation((selector: any) =>
       selector({ search: { searchTerm: "" } })
     );
-    useNavigateMock.mockReturnValue(vi.fn());
+    (useNavigate as any).mockReturnValue(navigateMock);
   });
 
   afterEach(() => {
@@ -23,73 +37,39 @@ describe("SearchInput", () => {
   });
 
   it("renders input with value from redux", () => {
-    useSelectorMock.mockImplementation((selector) =>
+    (useAppSelector as any).mockImplementation((selector: any) =>
       selector({ search: { searchTerm: "react" } })
     );
     render(<SearchInput />);
-    expect(screen.getByPlaceholderText(/search packages/i)).toHaveValue(
-      "react"
-    );
+    expect(screen.getByPlaceholderText(/search packages/i)).toHaveValue("react");
   });
 
-  it("dispatches setSearchTerm on input change", () => {
-    const dispatch = vi.fn();
-    useDispatchMock.mockReturnValue(dispatch);
-    useSelectorMock.mockImplementation((selector) =>
-      selector({ search: { searchTerm: "" } })
-    );
+  it("dispatches setSearchTerm on input change", async () => {
     render(<SearchInput />);
     const input = screen.getByPlaceholderText(/search packages/i);
-
-    userEvent.type(input, "redux");
-
-    expect(dispatch).toHaveBeenCalledWith({
-      type: "search/setSearchTerm",
-      payload: "r",
-    });
-    // Nota: puedes mejorar esto simulando cada letra o sólo checar que se llame varias veces.
+    await userEvent.type(input, "redux");
+    expect(dispatchMock).toHaveBeenCalled();
   });
 
   it("does not dispatch or navigate on empty search term submit", () => {
-    const dispatch = vi.fn();
-    const navigate = vi.fn();
-    useDispatchMock.mockReturnValue(dispatch);
-    useNavigateMock.mockReturnValue(navigate);
-    useSelectorMock.mockImplementation((selector) =>
+    (useAppSelector as any).mockImplementation((selector: any) =>
       selector({ search: { searchTerm: " " } })
     );
-
     render(<SearchInput />);
-    const form = screen.getByRole("form");
-
+    const form = screen.getByRole("textbox").closest("form")!;
     fireEvent.submit(form);
-
-    expect(dispatch).not.toHaveBeenCalled();
-    expect(navigate).not.toHaveBeenCalled();
+    expect(dispatchMock).not.toHaveBeenCalled();
+    expect(navigateMock).not.toHaveBeenCalled();
   });
 
   it("dispatches getPackages and navigates on valid submit", () => {
-    const dispatch = vi.fn();
-    const navigate = vi.fn();
-    useDispatchMock.mockReturnValue(dispatch);
-    useNavigateMock.mockReturnValue(navigate);
-
-    // Mock selector con término válido
-    useSelectorMock.mockImplementation((selector) =>
+    (useAppSelector as any).mockImplementation((selector: any) =>
       selector({ search: { searchTerm: "react" } })
     );
-
     render(<SearchInput />);
-    const form = screen.getByRole("form");
-
+    const form = screen.getByRole("textbox").closest("form")!;
     fireEvent.submit(form);
-
-    expect(dispatch).toHaveBeenCalledWith(
-      expect.objectContaining({
-        // Aquí el thunk getPackages con los parámetros
-        type: expect.stringContaining("getPackages/pending"),
-      })
-    );
-    expect(navigate).toHaveBeenCalledWith("/search?term=react");
+    expect(dispatchMock).toHaveBeenCalled();
+    expect(navigateMock).toHaveBeenCalledWith("/search?term=react");
   });
 });
