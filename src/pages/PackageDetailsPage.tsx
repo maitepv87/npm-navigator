@@ -18,7 +18,8 @@ import { getPackage } from "../store/thunks";
 import { FormSkeleton, ErrorHandler } from "../components";
 
 export const PackageDetailsPage = () => {
-  const { name } = useParams<{ name: string }>();
+  const rawName = useParams<{ name: string }>().name;
+  const name = rawName ? decodeURIComponent(rawName) : "";
   const dispatch = useAppDispatch();
   const {
     package: packageData,
@@ -33,6 +34,14 @@ export const PackageDetailsPage = () => {
   }, [dispatch, name]);
 
   if (isLoading) return <FormSkeleton />;
+
+  if (!packageData.name && !isLoading && !error) {
+    return (
+      <Typography sx={{ mt: 5, textAlign: "center" }}>
+        No package data available.
+      </Typography>
+    );
+  }
 
   return (
     <Container sx={{ maxWidth: "md", mt: 5 }}>
@@ -57,7 +66,8 @@ export const PackageDetailsPage = () => {
           </Box>
 
           {/* instalación */}
-          <Box
+          <Typography
+            component="div"
             sx={{
               bgcolor: "#f5f5f5",
               p: 1,
@@ -72,7 +82,7 @@ export const PackageDetailsPage = () => {
           >
             <Terminal fontSize="small" />
             npm install {packageData.name}
-          </Box>
+          </Typography>
 
           {/* License, Author, Maintainers */}
           <Stack spacing={2}>
@@ -81,7 +91,10 @@ export const PackageDetailsPage = () => {
               <Typography variant="body2" fontWeight="bold">
                 License:
               </Typography>
-              <Chip label={packageData.license} color="primary" />
+              <Chip
+                label={packageData.license || "No license"}
+                color="primary"
+              />
             </Box>
 
             <Box display="flex" alignItems="center" gap={1}>
@@ -107,10 +120,10 @@ export const PackageDetailsPage = () => {
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", pl: 4 }}>
-              {packageData.maintainers.map((m) => (
+              {packageData.maintainers.map((m, index) => (
                 <Chip
-                  key={m.email}
-                  label={`${m.name} (${m.email})`}
+                  key={`${m.name}-${m.email || index}`}
+                  label={`${m.name} (${m.email || "no email"})`}
                   variant="outlined"
                   color="secondary"
                 />

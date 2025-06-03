@@ -14,8 +14,6 @@ export const HomePage = () => {
   useEffect(() => {
     dispatch(resetSearchState());
     dispatch(getFeaturePackages());
-
-    console.log("Testing deploy flow");
   }, [dispatch]);
 
   if (isLoading) return <HomeSkeleton />;
