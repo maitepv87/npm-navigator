@@ -32,7 +32,8 @@ export const getPackage = (
     } catch (error) {
       let errorMessage = "Unexpected error occurred";
       if (error instanceof AxiosError) {
-        errorMessage = error.response?.data?.message || errorMessage;
+        errorMessage =
+          error.response?.data?.message || error.message || errorMessage;
       }
       dispatch(setError(errorMessage));
     }

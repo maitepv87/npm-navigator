@@ -14,8 +14,6 @@ export const HomePage = () => {
   useEffect(() => {
     dispatch(resetSearchState());
     dispatch(getFeaturePackages());
-
-    
   }, [dispatch]);
 
   if (isLoading) return <HomeSkeleton />;
@@ -46,6 +44,12 @@ export const HomePage = () => {
       >
         The package manager for JavaScript. Search and view packages with ease.
       </Typography>
+
+      {!isLoading && featurePackages.length === 0 && !error && (
+        <Typography variant="body1" align="center" sx={{ mt: 4 }}>
+          No featured packages available at this time.
+        </Typography>
+      )}
 
       <Grid
         container

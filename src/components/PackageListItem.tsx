@@ -8,6 +8,8 @@ interface PackageListItemProps {
 }
 
 export const PackageListItem = ({ pack }: PackageListItemProps) => {
+  const packageUrl = `/packages/${encodeURIComponent(pack.name)}`;
+
   return (
     <Card
       elevation={1}
@@ -26,7 +28,7 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
         <Typography
           variant="h6"
           component={Link}
-          to={`/packages/${pack.name}`}
+          to={packageUrl}
           sx={{
             textDecoration: "none",
             fontWeight: "bold",
@@ -37,9 +39,11 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
         >
           {pack.name}
         </Typography>
+
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
           {pack.description || "No description available"}
         </Typography>
+
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 1 }}>
           {(pack.keywords || []).map((keyword, index) => (
             <Chip
@@ -54,7 +58,7 @@ export const PackageListItem = ({ pack }: PackageListItemProps) => {
       </CardContent>
 
       <Box sx={{ alignSelf: "center", mt: { xs: 2, sm: 0 } }}>
-        <ActionButton to={`/packages/${pack.name}`} color="primary">
+        <ActionButton to={packageUrl} color="primary">
           View
         </ActionButton>
       </Box>

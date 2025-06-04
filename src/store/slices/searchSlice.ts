@@ -56,7 +56,6 @@ export const searchSlice = createSlice({
       state.package = initialState.package;
       state.total = 0;
       state.searchTerm = "";
-      state.isLoading = false;
       state.error = null;
     },
     setPackages: (state, action: PayloadAction<PackagesPayload>) => {
