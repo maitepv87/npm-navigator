@@ -35,7 +35,23 @@ Follow these steps to run the project locally:
    ```bash
    git clone https://github.com/maitepv87/npm-navigator.git
    cd npm-navigator
+   ```
+
+2. Install dependencies:
+
+   ```bash
    npm install
+   ```
+
+3. Set up environment variables in a .env file:
+
+   ```ini
+   VITE_API_URL=https://registry.npmjs.org
+   ```
+
+   3. Start the development server:
+
+   ```bash
    npm run dev
    ```
 
